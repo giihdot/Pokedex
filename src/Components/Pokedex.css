@@ -1,0 +1,91 @@
+.Junt {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30%;
+  width: 35vw;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 2em;
+  background-color: rgb(1, 1, 153);
+  color: #c7b705;
+  text-align: center;
+}
+
+h2 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.5em;
+  background-color: #c7b705;
+  color: rgb(1, 1, 153);
+  text-align: center;
+}
+
+/* Tema claro */
+.light {
+  background-color: white;
+  color: black;
+}
+
+/* Tema escuro */
+.dark {
+  background-color: black;
+  color: white;
+}
+
+.Flex-Box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+img {
+  width: 20vw;
+  height: 35vh;
+  align-self: center;
+}
+
+input {
+  width: 35vw;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  border: solid 2px #c7b705;
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.button1 {
+  background-color: rgb(1, 1, 153);
+  color: #c7b705;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1em;
+  align-items: center;
+}
+.button2 {
+  background-color: #c7b705;
+  color: rgb(1, 1, 153);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1em;
+  align-items: center;
+}
+.button1:hover{
+    background-color:#c7b705;
+    color:rgb(1, 1, 153);
+}
+
+.button2:hover{
+    background-color:#c7b705;
+    color:rgb(1, 1, 153);
+}
+
+button:hover {
+    background-color: rgb(1, 1, 153);
+    color:#c7b705;
+}
+
+.Flex-Box1 {
+  display: flex;
+  flex-direction: row;
+  width: 20vw;
+  margin-left: 25%;
+  justify-content: space-around;
+}

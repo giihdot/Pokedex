@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./Favoritos.css"
 
 function Favoritos() {
   const [favorites, setFavorites] = useState([]);
@@ -15,15 +16,15 @@ function Favoritos() {
 
   return (
     <div>
-      <h1>Pokémons Favoritos</h1>
+      <h1>POKÉMONS - FAVORITOS </h1>
       {favorites.length > 0 ? (
         favorites.map((pokemon) => (
-          <div key={pokemon.id}>
+          <div className="Flex-Box" key={pokemon.id}>
             <h2>{pokemon.name}</h2>
             <img src={pokemon.image} alt={pokemon.name} />
-            <p>{pokemon.type}</p>
+            {/* <p>{pokemon.type}</p>
             <p>{pokemon.ability}</p>
-            <p>{pokemon.stat}</p>
+            <p>{pokemon.stat}</p> */}
             <button onClick={() => removeFavorite(pokemon.id)}>Remover</button>
           </div>
         ))

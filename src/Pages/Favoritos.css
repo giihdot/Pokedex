@@ -1,0 +1,27 @@
+h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 2em;
+  background-color: #c7b705;
+  color: rgb(1, 1, 153);
+  text-align: center;
+}
+
+button {
+  background-color: rgb(1, 1, 153);
+  color: #c7b705;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1em;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #c7b705;
+  color: rgb(1, 1, 153);
+}
+
+.Flex-Box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35vw;
+}

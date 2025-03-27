@@ -1,6 +1,6 @@
 // src/Pages/Home.js
 import { useState, useEffect } from "react";
-// import "./Pokede.css"; // Importa o CSS
+import "./Pokedex.css"; // Importa o CSS
 
 function Home() {
   const [pokemon, setPokemon] = useState(null);
@@ -17,7 +17,9 @@ function Home() {
   const Busquepok = async () => {
     if (!Pesquisar) return;
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${Pesquisar.toLowerCase()}`);
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${Pesquisar.toLowerCase()}`
+      );
       const data = await response.json();
       setPokemon(data);
     } catch {
@@ -30,7 +32,14 @@ function Home() {
     if (!pokemon) return;
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
     if (!favoritos.some((fav) => fav.id === pokemon.id)) {
-      favoritos.push({ id: pokemon.id, name: pokemon.name, image: pokemon.sprites.front_default, type: pokemon.type, Habilidade: pokemon.ability, Estatísticas: pokemon.stat });
+      favoritos.push({
+        id: pokemon.id,
+        name: pokemon.name,
+        image: pokemon.sprites.front_default,
+        type: pokemon.type,
+        Habilidade: pokemon.ability,
+        Estatísticas: pokemon.stat,
+      });
       localStorage.setItem("favorites", JSON.stringify(favoritos));
     }
   };
@@ -44,19 +53,32 @@ function Home() {
 
   return (
     <div>
-      <h1>Pokédex</h1>
-      <input type="text" placeholder="Nome ou ID" onChange={(e) => setPesquisar(e.target.value)} />
-      <button onClick={Busquepok}>Buscar</button>
-      <button onClick={MudTema}>
+      <h1>POKEDÉX - BUSQUE OS POKÉMONS </h1>
+      <div className="Junt">
+      <input
+        type="text"
+        placeholder="Nome ou ID"
+        onChange={(e) => setPesquisar(e.target.value)}
+      />
+      <div className="Flex-Box1">
+      <button className="button1" onClick={Busquepok}>
+        Buscar
+      </button>
+      <button className="button1" onClick={MudTema}>
         Mudar para {tema === "light" ? "Modo Escuro" : "Modo Claro"}
       </button>
+      </div>
       {pokemon && (
-        <div>
+        <div className="Flex-Box">
           <h2>{pokemon.name}</h2>
+          {/* <p>{pokemon.types}</p>
+          <p>{pokemon.abilities}</p>
+          <p>{pokemon.stats}</p> */}
           <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          <button onClick={addFavorites}>Favoritar</button>
+          <button className="button2" onClick={addFavorites}>Favoritar</button>
         </div>
       )}
+      </div>
     </div>
   );
 }
