@@ -94,8 +94,8 @@ button:hover {
 
 .pokemon-card p {
   font-size: 1em;
-  color:#c7b705;
-  text-align: center;
+  color:rgb(1, 1, 153);
+  text-align: justify;
   margin-bottom: 10px;
 }
 
@@ -106,14 +106,6 @@ button:hover {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-}
-
-/* Estilos de texto para informações de tipo, habilidades e estatísticas */
-p {
-  font-size: 1.1em;
-  color: var(--secondary-color);
-  text-align: center;
-  margin: 5px 0;
 }
 
 
