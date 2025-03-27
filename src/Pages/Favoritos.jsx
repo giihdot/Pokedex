@@ -22,9 +22,9 @@ function Favoritos() {
           <div className="Flex-Box" key={pokemon.id}>
             <h2>{pokemon.name}</h2>
             <img src={pokemon.image} alt={pokemon.name} />
-            {/* <p>{pokemon.type}</p>
-            <p>{pokemon.ability}</p>
-            <p>{pokemon.stat}</p> */}
+            {/* <p>{pokemon.types}</p>
+            <p>{pokemon.abilities}</p>
+            <p>{pokemon.stats}</p> */}
             <button onClick={() => removeFavorite(pokemon.id)}>Remover</button>
           </div>
         ))
