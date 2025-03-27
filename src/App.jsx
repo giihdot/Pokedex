@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
-import Home from "./Pages/Pokedex"
+import Pokedex from "./Components/Pokedex"
 import Favoritos from "./Pages/Favoritos"
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         </ul>
       </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Pokedex />} />
         <Route path="/favoritos" element={<Favoritos/>} />
       </Routes>
     </BrowserRouter>
