@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import Pokedex from "./Components/Pokedex"
 import Favoritos from "./Pages/Favoritos"
 import "./App.css"
