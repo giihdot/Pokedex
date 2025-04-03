@@ -3,91 +3,111 @@ import "./Pokedex.css";
 
 function Pokedex() {
   // Definição dos estados para armazenar os dados necessários
-  const [pokemon, setPokemon] = useState(null); 
-  const [Pesquisar, setPesquisar] = useState(""); 
-  const [Tema, setTema] = useState(localStorage.getItem("theme") || "light"); 
-  // Estado para o tema, busca o valor armazenado no LocalStorage, se existir
+  const [pokemon, setPokemon] = useState(null); // Armazena os dados do Pokémon encontrado
+  const [Pesquisar, setPesquisar] = useState(""); // Armazena o valor digitado na barra de pesquisa
+  const [Tema, setTema] = useState(localStorage.getItem("theme") || "light"); // Armazena o tema atual, se não houver salva "light" por padrão
 
-
+  // useEffect para alterar o tema da página (modo claro ou escuro)
   useEffect(() => {
-    document.body.classList.remove("light", "dark"); // Remove as classes antigas de tema
-    document.body.classList.add(Tema); // Adiciona a classe do tema atual (light ou dark)
-  }, [Tema]);
+    // Remove as classes de tema antigos e aplica o novo
+    document.body.classList.remove("light", "dark"); 
+    document.body.classList.add(Tema); 
+  }, [Tema]); // Dependência do estado 'Tema', para garantir que a troca de tema ocorra quando 'Tema' mudar
 
-
+  // Função que busca o Pokémon na API quando o botão "Buscar" é clicado
   const fetchPokemon = async () => {
-    if (!Pesquisar) return; // Se o campo de busca estiver vazio, não faz nada
+    if (!Pesquisar) {
+      // Se o campo de pesquisa estiver vazio, exibe um alerta
+      alert("Por favor, digite o nome ou ID do Pokémon para buscar!");
+      return;
+    }
+
     try {
-      // Realiza a requisição para a API de Pokémon usando o nome ou ID fornecido
+      // Faz a requisição para a API de Pokémon usando o nome ou ID fornecido
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${Pesquisar.toLowerCase()}`
       );
-      const data = await response.json(); // Converte a resposta para JSON
-      setPokemon(data); // Atualiza o estado com os dados do Pokémon encontrado
-    } catch {
-      setPokemon(null); 
+
+      if (!response.ok) {
+        // Se a resposta da API não for bem-sucedida (erro, Pokémon não encontrado), exibe um alerta
+        alert("Pokémon não encontrado. Verifique o nome ou ID.");
+        setPokemon(null); // Limpa o estado do Pokémon
+        return;
+      }
+
+      // Converte a resposta da API para JSON
+      const data = await response.json(); 
+      // Atualiza o estado com os dados do Pokémon encontrado
+      setPokemon(data); 
+    } catch (error) {
+      // Se ocorrer um erro durante a requisição, exibe um alerta
+      alert("Erro ao buscar o Pokémon. Tente novamente.");
+      setPokemon(null); // Limpa o estado do Pokémon
     }
   };
 
   function addFavorites() {
-    if (!pokemon) return; // Se não houver Pokémon carregado, não faz nada
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || []; // Recupera a lista de favoritos do LocalStorage ou cria uma lista vazia
+    if (!pokemon) return; // Se não houver um Pokémon, não faz nada
+    // Recupera os favoritos salvos no localStorage ou cria um array vazio se não houver favoritos
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    // Verifica se o Pokémon já está na lista de favoritos
     if (!favorites.some((fav) => fav.id === pokemon.id)) {
-      // Verifica se o Pokémon já está nos favoritos (com base no 'id')
+      // Se o Pokémon não estiver nos favoritos, o adiciona
       favorites.push({
         id: pokemon.id,
         name: pokemon.name,
-        image: pokemon.sprites.front_default, // Adiciona a imagem do Pokémon
-        type: pokemon.types.map((t) => t.type.name).join(", "), // Adiciona os tipos do Pokémon
-        ability: pokemon.abilities.map((a) => a.ability.name).join(", "), // Adiciona as habilidades do Pokémon
+        image: pokemon.sprites.front_default, 
+        type: pokemon.types.map((t) => t.type.name).join(", "), 
+        ability: pokemon.abilities.map((a) => a.ability.name).join(", "),
         stats: pokemon.stats
           .map((s) => `${s.stat.name}: ${s.base_stat}`)
-          .join(", "), // Adiciona as estatísticas do Pokémon
+          .join(", "), 
       });
-      localStorage.setItem("favorites", JSON.stringify(favorites)); // Salva a lista de favoritos atualizada no LocalStorage
+      localStorage.setItem("favorites", JSON.stringify(favorites)); 
     }
   };
 
   function Buscar_Tema() {
-    const NovoTema = Tema === "light" ? "dark" : "light"; // Alterna entre os temas "light" e "dark"
-    setTema(NovoTema); // Atualiza o estado do tema
+    const NovoTema = Tema === "light" ? "dark" : "light"; 
+    setTema(NovoTema); 
     localStorage.setItem("Tema", NovoTema); 
   };
 
   return (
     <div>
-      <h1> POKEDÉX </h1>
+      <h1> POKEDÉX </h1> 
       <div className="Junt"> 
         <input
-          type="text"
+          type="text" // Campo de entrada para o nome ou ID do Pokémon
           placeholder="Nome ou ID"
-          onChange={(e) => setPesquisar(e.target.value)} // Atualiza o termo de busca no estado 'Pesquisar'
+          onChange={(e) => setPesquisar(e.target.value)} // Atualiza o estado 'Pesquisar' quando o usuário digita
         />
         <div className="Flex-Box1"> 
           <button onClick={fetchPokemon}> 
-            Buscar
+            Buscar 
           </button>
           <button onClick={Buscar_Tema}> 
-            Mudar para {Tema === "light" ? "Modo Escuro" : "Modo Claro"} {/* Texto dinâmico que indica qual tema será aplicado */}
+            Mudar para {Tema === "light" ? "Modo Escuro" : "Modo Claro"} 
           </button>
         </div>
-        {pokemon && ( // Verifica se há dados do Pokémon carregados
-          <div className="pokemon-card"> {/* Exibe os detalhes do Pokémon encontrado */}
+
+        {pokemon && (
+          <div className="pokemon-card"> 
             <h2>{pokemon.name}</h2> 
-            <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+            <img src={pokemon.sprites.front_default} alt={pokemon.name} /> 
             <p>
               <strong>Tipo:</strong>{" "}
               {pokemon.types.map((t) => t.type.name).join(", ")} 
             </p>
             <p>
               <strong>Habilidades:</strong>{" "}
-              {pokemon.abilities.map((a) => a.ability.name).join(", ")} 
+              {pokemon.abilities.map((a) => a.ability.name).join(", ")}
             </p>
             <p>
               <strong>Estatísticas:</strong>{" "}
               {pokemon.stats
                 .map((s) => `${s.stat.name}: ${s.base_stat}`)
-                .join(", ")}
+                .join(", ")} 
             </p>
             <button className="button" onClick={addFavorites}> 
               Favoritar
