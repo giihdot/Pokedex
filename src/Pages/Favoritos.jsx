@@ -13,7 +13,7 @@ function Favoritos() {
     // Filtra a lista de favoritos, removendo o Pokémon com o 'id' passado
     const updatedFavorites = favorites.filter((pokemon) => pokemon.id !== id);
     setFavorites(updatedFavorites); // Atualiza o estado com a nova lista sem o Pokémon removido
-    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); //transforma a lista em texto
   }
 
   return (
@@ -31,7 +31,7 @@ function Favoritos() {
         ))
       ) : (
         // Caso não haja favoritos, exibe esta mensagem
-        <p>Nenhum Pokémon favoritado.</p>
+        <p>Nenhum Pokémon favoritado</p>
       )}
     </div>
   );

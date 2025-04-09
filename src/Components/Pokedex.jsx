@@ -58,12 +58,9 @@ function Pokedex() {
         name: pokemon.name,
         image: pokemon.sprites.front_default, 
         type: pokemon.types.map((t) => t.type.name).join(", "), 
-        ability: pokemon.abilities.map((a) => a.ability.name).join(", "),
-        stats: pokemon.stats
-          .map((s) => `${s.stat.name}: ${s.base_stat}`)
-          .join(", "), 
+        ability: pokemon.abilities.map((a) => a.ability.name).join(", ")
       });
-      localStorage.setItem("favorites", JSON.stringify(favorites)); 
+      localStorage.setItem("favorites", JSON.stringify(favorites)); //transforma a lista em texto
     }
   };
 
