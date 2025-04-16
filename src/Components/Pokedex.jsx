@@ -56,6 +56,7 @@ function Pokedex() {
       favorites.push({
         id: pokemon.id,
         name: pokemon.name,
+<<<<<<< HEAD
         image: pokemon.sprites.front_default,
         type: pokemon.types.map((t) => t.type.name).join(", "),
         ability: pokemon.abilities.map((a) => a.ability.name).join(", "),
@@ -64,6 +65,13 @@ function Pokedex() {
           .join(", "),
       });
       localStorage.setItem("favorites", JSON.stringify(favorites));
+=======
+        image: pokemon.sprites.front_default, 
+        type: pokemon.types.map((t) => t.type.name).join(", "), 
+        ability: pokemon.abilities.map((a) => a.ability.name).join(", ")
+      });
+      localStorage.setItem("favorites", JSON.stringify(favorites)); //transforma a lista em texto
+>>>>>>> 416c926aa4029eb3aa69574c710d7bd078e23a98
     }
   }
 
