@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"; 
-import "./Pokedex.css"; 
+import { useState, useEffect } from "react";
+import "./Pokedex.css";
 
 function Pokedex() {
   // Definição dos estados para armazenar os dados necessários
@@ -10,8 +10,8 @@ function Pokedex() {
   // useEffect para alterar o tema da página (modo claro ou escuro)
   useEffect(() => {
     // Remove as classes de tema antigos e aplica o novo
-    document.body.classList.remove("light", "dark"); 
-    document.body.classList.add(Tema); 
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(Tema);
   }, [Tema]); // Dependência do estado 'Tema', para garantir que a troca de tema ocorra quando 'Tema' mudar
 
   // Função que busca o Pokémon na API quando o botão "Buscar" é clicado
@@ -25,7 +25,7 @@ function Pokedex() {
     try {
       // Faz a requisição para a API de Pokémon usando o nome ou ID fornecido
       const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${Pesquisar.toLowerCase()}`
+        `https://pokeapi.co/api/v2/pokemon/${Pesquisar}`
       );
 
       if (!response.ok) {
@@ -36,9 +36,9 @@ function Pokedex() {
       }
 
       // Converte a resposta da API para JSON
-      const data = await response.json(); 
+      const data = await response.json();
       // Atualiza o estado com os dados do Pokémon encontrado
-      setPokemon(data); 
+      setPokemon(data);
     } catch (error) {
       // Se ocorrer um erro durante a requisição, exibe um alerta
       alert("Erro ao buscar o Pokémon. Tente novamente.");
@@ -56,60 +56,85 @@ function Pokedex() {
       favorites.push({
         id: pokemon.id,
         name: pokemon.name,
-        image: pokemon.sprites.front_default, 
-        type: pokemon.types.map((t) => t.type.name).join(", "), 
+        image: pokemon.sprites.front_default,
+        type: pokemon.types.map((t) => t.type.name).join(", "),
         ability: pokemon.abilities.map((a) => a.ability.name).join(", "),
         stats: pokemon.stats
           .map((s) => `${s.stat.name}: ${s.base_stat}`)
-          .join(", "), 
+          .join(", "),
       });
-      localStorage.setItem("favorites", JSON.stringify(favorites)); 
+      localStorage.setItem("favorites", JSON.stringify(favorites));
     }
-  };
+  }
 
   function Buscar_Tema() {
-    const NovoTema = Tema === "light" ? "dark" : "light"; 
-    setTema(NovoTema); 
-    localStorage.setItem("Tema", NovoTema); 
-  };
+    const NovoTema = Tema === "light" ? "dark" : "light";
+    setTema(NovoTema);
+    localStorage.setItem("Tema", NovoTema);
+  }
 
   return (
     <div>
-      <h1> POKEDÉX </h1> 
-      <div className="Junt"> 
+      <h1> POKEDÉX </h1>
+      <div className="Junt">
         <input
           type="text" // Campo de entrada para o nome ou ID do Pokémon
           placeholder="Nome ou ID"
           onChange={(e) => setPesquisar(e.target.value)} // Atualiza o estado 'Pesquisar' quando o usuário digita
         />
-        <div className="Flex-Box1"> 
-          <button onClick={fetchPokemon}> 
-            Buscar 
-          </button>
-          <button onClick={Buscar_Tema}> 
-            Mudar para {Tema === "light" ? "Modo Escuro" : "Modo Claro"} 
+        <div className="Flex-Box1">
+          <button onClick={fetchPokemon}>Buscar</button>
+          <button onClick={Buscar_Tema}>
+            Mudar para {Tema === "light" ? "Modo Escuro" : "Modo Claro"}
           </button>
         </div>
 
         {pokemon && (
-          <div className="pokemon-card"> 
-            <h2>{pokemon.name}</h2> 
-            <img src={pokemon.sprites.front_default} alt={pokemon.name} /> 
-            <p>
-              <strong>Tipo:</strong>{" "}
-              {pokemon.types.map((t) => t.type.name).join(", ")} 
-            </p>
-            <p>
-              <strong>Habilidades:</strong>{" "}
-              {pokemon.abilities.map((a) => a.ability.name).join(", ")}
-            </p>
-            <p>
-              <strong>Estatísticas:</strong>{" "}
-              {pokemon.stats
-                .map((s) => `${s.stat.name}: ${s.base_stat}`)
-                .join(", ")} 
-            </p>
-            <button className="button" onClick={addFavorites}> 
+          <div className="pokemon-card">
+            <h2>
+              {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+            </h2>
+            <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+
+            {/* Exibe os tipos do Pokémon */}
+            <div>
+              <strong>Tipo:</strong>
+              <ul>
+                {pokemon.types.map((t, index) => (
+                  <li key={index}>
+                    {t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Exibe as habilidades do Pokémon */}
+            <div>
+              <strong>Habilidades:</strong>
+              <ul>
+                {pokemon.abilities.map((a, index) => (
+                  <li key={index}>
+                    {a.ability.name.charAt(0).toUpperCase() +
+                      a.ability.name.slice(1)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Exibe as estatísticas base do Pokémon */}
+            <div>
+              <strong>Estatísticas:</strong>
+              <ul>
+                {pokemon.stats.map((s, index) => (
+                  <li key={index}>
+                    {s.stat.name.charAt(0).toUpperCase() + s.stat.name.slice(1)}
+                    : {s.base_stat}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button className="button" onClick={addFavorites}>
               Favoritar
             </button>
           </div>
@@ -119,4 +144,4 @@ function Pokedex() {
   );
 }
 
-export default Pokedex; 
+export default Pokedex;
